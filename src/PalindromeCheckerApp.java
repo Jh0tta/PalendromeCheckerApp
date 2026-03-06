@@ -58,7 +58,7 @@
 
 import java.util.Scanner;
 
-public class UseCase8PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     /**
      * Node class representing a single element

@@ -1,42 +1,44 @@
 /**
  * ================================================================
- * MAIN CLASS - UseCase5PalindromeCheckerApp
+ * MAIN CLASS - UseCase6PalindromeCheckerApp
  * ================================================================
  *
- * Use Case 5: Stack-Based Palindrome Checker
+ * Use Case 6: Queue + Stack Fairness Check
  *
  * Description:
- * This program checks whether a given string is a palindrome
- * using the Stack data structure. A Stack follows the
- * Last-In-First-Out (LIFO) principle.
+ * This program demonstrates palindrome validation using
+ * two different data structures:
  *
- * A palindrome is a word that reads the same forward and backward.
- * Examples: noon, madam, level.
+ * - Queue (FIFO - First In First Out)
+ * - Stack (LIFO - Last In First Out)
  *
- * Program Flow:
- * 1. Declare and initialize an input string.
- * 2. Push each character of the string into a stack.
- * 3. Pop characters from the stack (which reverses the order).
- * 4. Compare the popped characters with the original string.
- * 5. If all characters match, the string is a palindrome.
- * 6. Print the result.
+ * Characters from the input string are inserted into both
+ * the queue and the stack.
  *
- * Stack Concept Used:
- * - push(): Adds element to the top of the stack.
- * - pop(): Removes the top element from the stack.
+ * The queue removes characters from the front (FIFO),
+ * while the stack removes characters from the top (LIFO).
  *
- * This approach uses the natural reversing behavior of a stack.
+ * By comparing the dequeued and popped characters,
+ * we can determine whether the string is a palindrome.
+ *
+ * If all characters match, the input string is confirmed
+ * as a palindrome.
+ *
+ * This use case helps understand how FIFO and LIFO
+ * behaviors can be combined for symmetric comparison.
  *
  * @author Developer
- * @version 5.0
+ * @version 6.0
  */
 
+import java.util.Queue;
+import java.util.LinkedList;
 import java.util.Stack;
 
-public class PalindromeCheckerApp {
+public class UseCase6PalindromeCheckerApp {
 
     /**
-     * Application entry point for UC5.
+     * Application entry point for UC6.
      *
      * @param args Command-line arguments (not used in this program)
      */
@@ -45,19 +47,24 @@ public class PalindromeCheckerApp {
         // ------------------------------------------------------------
         // Step 1: Declare and initialize the input string
         // ------------------------------------------------------------
-        String input = "noon";
+        String input = "madam";
 
         // ------------------------------------------------------------
-        // Step 2: Create a Stack to store characters
+        // Step 2: Create Queue and Stack data structures
+        // Queue -> FIFO behavior
+        // Stack -> LIFO behavior
         // ------------------------------------------------------------
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
         // ------------------------------------------------------------
-        // Step 3: Push each character of the string into the stack
-        // This stores characters in LIFO structure
+        // Step 3: Insert characters into both Queue and Stack
+        // Queue -> enqueue (add)
+        // Stack -> push
         // ------------------------------------------------------------
         for (char c : input.toCharArray()) {
-            stack.push(c);
+            queue.add(c);   // enqueue into queue
+            stack.push(c);  // push into stack
         }
 
         // ------------------------------------------------------------
@@ -66,13 +73,16 @@ public class PalindromeCheckerApp {
         boolean isPalindrome = true;
 
         // ------------------------------------------------------------
-        // Step 5: Iterate through the original string again
-        // and compare with characters popped from the stack
+        // Step 5: Compare characters removed from Queue and Stack
+        // Queue -> remove()  (FIFO)
+        // Stack -> pop()     (LIFO)
         // ------------------------------------------------------------
-        for (char c : input.toCharArray()) {
+        while (!queue.isEmpty()) {
 
-            // Pop character from stack and compare
-            if (c != stack.pop()) {
+            char fromQueue = queue.remove(); // dequeue
+            char fromStack = stack.pop();    // pop
+
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
